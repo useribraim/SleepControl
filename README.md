@@ -167,3 +167,7 @@ grep -nE 'URLSession|Network|socket|http' Sources/*.swift
 ```
 
 The command must print no lines.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
