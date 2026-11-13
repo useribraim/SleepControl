@@ -14,6 +14,42 @@ It works on battery power and without an external display.
 
 The battery floor rule always applies, even when the Low Power Mode exception applies.
 
+## Installation
+
+You build SleepControl from source on your own Mac. No download of a prebuilt binary is necessary, so you can read every line before it runs.
+
+1. Install the Command Line Tools, if they are not installed. A system dialog opens. Follow it.
+
+   ```sh
+   xcode-select --install
+   ```
+
+2. Get the source code:
+
+   ```sh
+   git clone https://github.com/useribraim/SleepControl.git
+   cd SleepControl
+   ```
+
+3. Build and install the app. The script compiles the app, copies it to `/Applications`, and opens it. It does not use sudo.
+
+   ```sh
+   scripts/install_application.sh
+   ```
+
+4. Find the laptop icon in the menu bar. Click it, then choose **Keep Awake with Lid Closed**.
+
+5. On first use, SleepControl explains the one-time permission. Click **Continue**, then enter your administrator password, or use Touch ID if macOS offers it. After that, the switch works without a prompt. See Sudoers rule for what the permission allows.
+
+6. Optional: choose **Launch at Login** in the menu to start SleepControl when you log in.
+
+To update later, run `git pull`, then run `scripts/install_application.sh` again.
+
+The menu-bar icon shows the state:
+
+- **Off:** a nearly closed laptop, drawn as an outline. The Mac sleeps normally.
+- **On:** the same laptop with light in the gap. The Mac stays awake with the lid closed.
+
 ## How it differs from Sleepless
 
 - It does not poll. It reads the state through IOKit and reacts to power and wake notifications.
@@ -43,13 +79,9 @@ scripts/build_application.sh [destination_directory]
 
 The script writes `SleepControl.app` to `build/` by default. It signs the app ad hoc. It does not use sudo.
 
-## Install
+## Install script details
 
-```sh
-scripts/install_application.sh
-```
-
-The script builds the app, quits a running copy, replaces `/Applications/SleepControl.app`, and opens it. It does not use sudo.
+`scripts/install_application.sh` builds the app, quits a running copy, replaces `/Applications/SleepControl.app`, and opens it. It does not use sudo.
 
 SleepControl asks for the administrator password once, on first use. The prompt appears when you turn on Keep Awake with Lid Closed. If you cancel the prompt, nothing changes and no error appears.
 
@@ -122,7 +154,7 @@ A failed automatic turn-off is retried every 60 seconds, until it succeeds or Ke
 
 ## Measured resource use
 
-Idle CPU use is 0.0 %. Resident memory is about 25 MB. The executable is about 170 KB. It links only Apple system frameworks.
+Idle CPU use is 0.0 %. Resident memory is about 25 to 28 MB. The executable is about 170 KB. It links only Apple system frameworks.
 
 ## Privacy
 
